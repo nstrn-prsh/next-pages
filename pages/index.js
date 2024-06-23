@@ -3,7 +3,11 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home({ users }) {
+   console.log(
+      users.map((item) => item.title),
+      "==>  get static props users"
+   );
    return (
       <div className={styles.container}>
          <Head>
@@ -18,10 +22,22 @@ export default function Home() {
                   <Link href='/courses'> go to courses</Link>
                </li>
                <li>
-                  <Link href='/articles' replace>articles</Link>
+                  <Link href='/articles' replace>
+                     articles
+                  </Link>
                </li>
             </ul>
          </main>
+
+         <section>
+            <ul>
+               {users.map((item) => (
+                  <li key={item.id}>
+                     <p>{item.name}</p>
+                  </li>
+               ))}
+            </ul>
+         </section>ّ
 
          <footer className={styles.footer}>
             <span className={styles.logo}>
@@ -35,4 +51,14 @@ export default function Home() {
          </footer>
       </div>
    );
+}
+
+export async function getStaticProps() {
+   const data = "nstrn prshrf";
+   const res = await fetch("https://jsonplaceholder.typicode.com/users");
+   const users = await res.json();
+
+   return {
+      props: { users },
+   };
 }
