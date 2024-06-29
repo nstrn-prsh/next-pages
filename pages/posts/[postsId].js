@@ -37,11 +37,13 @@ export async function getStaticProps(context) {
    //    age api maslan posts/102 call shode ke nadarimesh - bere safe 404
    if (!data.body) {
       return {
-         notFound: true,
+         notFound: true, //age nabood 404 true | false | blocking
+         redirect: {destination : "/"}, // age nabood be safe asli redirect beshe
       };
    }
 
    return {
       props: { data },
+      revalidate: 10, //ISR   
    };
 }
